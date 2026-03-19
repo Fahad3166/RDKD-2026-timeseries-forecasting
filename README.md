@@ -18,6 +18,7 @@ The dataset contains daily energy consumption for 2023 (training) and 2024 (test
 │ └── 📁 processed ← Cleaned data and extracted features
 
 │
+
 ├── 📁 src ← Python modules
 
 │ ├── 📄 config.py ← Configuration and paths
@@ -156,4 +157,19 @@ jupyter notebook notebooks/02_feature_extraction.ipynb
 
 ## Perform Clustering
 jupyter notebook notebooks/03_clustering.ipynb
+
+## Dependencies
+text
+python=3.11
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+scipy
+statsmodels
+jupyter
+joblib
+Full dependencies in environment.yml and requirements.txt.
+
 
