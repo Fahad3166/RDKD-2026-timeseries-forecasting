@@ -12,8 +12,11 @@ The dataset contains daily energy consumption for 2023 (training) and 2024 (test
 ## 🗂️ Repository Structure
 📦 RDKD-2026-timeseries-forecasting
 ├── 📁 data
+
 │ ├── 📁 raw ← Place sample_23.csv & sample_24.csv here
+
 │ └── 📁 processed ← Cleaned data and extracted features
+
 │
 ├── 📁 src ← Python modules
 │ ├── 📄 config.py ← Configuration and paths
