@@ -10,6 +10,7 @@ This project explores clustering as a preprocessing step for large-scale time se
 
 The dataset contains daily energy consumption for 2023 (training) and 2024 (testing, leap year with 366 days).
 ## 🗂️ Repository Structure
+
 ├── 📁 data/
 │ ├── 📁 raw/ ← Place sample_23.csv and sample_24.csv here
 │ └── 📁 processed/ ← Cleaned data and extracted features
