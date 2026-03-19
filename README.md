@@ -10,38 +10,38 @@ This project explores clustering as a preprocessing step for large-scale time se
 
 The dataset contains daily energy consumption for 2023 (training) and 2024 (testing, leap year with 366 days).
 ## 🗂️ Repository Structure
-
-├── 📁 data/
-│ ├── 📁 raw/ ← Place sample_23.csv and sample_24.csv here
-│ └── 📁 processed/ ← Cleaned data and extracted features
+📦 RDKD-2026-timeseries-forecasting
+├── 📁 data
+│ ├── 📁 raw ← Place sample_23.csv & sample_24.csv here
+│ └── 📁 processed ← Cleaned data and extracted features
 │
-├── 📁 src/ ← Python modules
-│ ├── config.py ← Configuration and paths
-│ ├── data_loader.py ← Data loading functions
-│ ├── preprocessing.py ← Data cleaning and normalization
-│ ├── feature_engineering.py ← Feature extraction from time series
-│ └── utils.py ← Utility functions
+├── 📁 src ← Python modules
+│ ├── 📄 config.py ← Configuration and paths
+│ ├── 📄 data_loader.py ← Data loading functions
+│ ├── 📄 preprocessing.py ← Data cleaning and normalization
+│ ├── 📄 feature_engineering.py ← Feature extraction from time series
+│ └── 📄 utils.py ← Utility functions
 │
-├── 📁 notebooks/ ← Jupyter notebooks for analysis
-│ ├── 01_data_exploration.ipynb
-│ ├── 02_feature_extraction.ipynb
-│ ├── 03_clustering.ipynb
-│ └── 04_forecasting.ipynb
+├── 📁 notebooks ← Jupyter notebooks for analysis
+│ ├── 📄 01_data_exploration.ipynb
+│ ├── 📄 02_feature_extraction.ipynb
+│ ├── 📄 03_clustering.ipynb
+│ └── 📄 04_forecasting.ipynb
 │
-├── 📁 outputs/
-│ ├── 📁 clustering/ ← Cluster assignments and models
-│ ├── 📁 forecasting/ ← Trained forecasting models
-│ ├── 📁 evaluation/ ← Performance metrics
-│ └── 📁 figures/ ← Generated plots
+├── 📁 outputs
+│ ├── 📁 clustering ← Cluster assignments and models
+│ ├── 📁 forecasting ← Trained forecasting models
+│ ├── 📁 evaluation ← Performance metrics
+│ └── 📁 figures ← Generated plots
 │
-├── 📁 report/ ← Final report (PDF)
-├── 📁 presentation/ ← 10-minute presentation
-├── 📁 diary/ ← Individual research diaries
+├── 📁 report ← Final report (PDF)
+├── 📁 presentation ← 10-minute presentation
+├── 📁 diary ← Individual research diaries
 │
-├── .gitignore
-├── environment.yml ← Conda environment
-├── README.md ← This file
-└── requirements.txt ← Python dependencies
+├── 📄 .gitignore
+├── 📄 environment.yml ← Conda environment
+├── 📄 README.md ← This file
+└── 📄 requirements.txt ← Python dependencies
 
 ## Getting Started
 
@@ -57,7 +57,7 @@ The dataset contains daily energy consumption for 2023 (training) and 2024 (test
    cd RDKD-2026-timeseries-forecasting
    
 ## Download the dataset:
-Download sample_23.csv and sample_24.csv from this link
+Download sample_23.csv and sample_24.csv from this link # https://ucloud.univie.ac.at/index.php/s/o5295C8mQo6Jg6m
 Place both files in data/raw/
 ## Set up the environment:
 Using Conda (recommended)
