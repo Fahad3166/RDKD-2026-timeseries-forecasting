@@ -1,0 +1,40 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.conda/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Data (we don't want to upload large CSV files to GitHub)
+data/raw/*.csv
+data/processed/*.csv
+!data/processed/.gitkeep
+
+# Outputs (figures and results are okay, but large files skip)
+outputs/clustering/*.pkl
+outputs/forecasting/*.pkl
+outputs/evaluation/*.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
