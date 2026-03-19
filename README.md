@@ -19,32 +19,60 @@ The dataset contains daily energy consumption for 2023 (training) and 2024 (test
 
 │
 ├── 📁 src ← Python modules
+
 │ ├── 📄 config.py ← Configuration and paths
+
 │ ├── 📄 data_loader.py ← Data loading functions
+
 │ ├── 📄 preprocessing.py ← Data cleaning and normalization
+
 │ ├── 📄 feature_engineering.py ← Feature extraction from time series
+
 │ └── 📄 utils.py ← Utility functions
+
 │
+
 ├── 📁 notebooks ← Jupyter notebooks for analysis
+
 │ ├── 📄 01_data_exploration.ipynb
+
 │ ├── 📄 02_feature_extraction.ipynb
+
 │ ├── 📄 03_clustering.ipynb
+
 │ └── 📄 04_forecasting.ipynb
+
 │
+
 ├── 📁 outputs
+
 │ ├── 📁 clustering ← Cluster assignments and models
+
+
 │ ├── 📁 forecasting ← Trained forecasting models
+
 │ ├── 📁 evaluation ← Performance metrics
+
 │ └── 📁 figures ← Generated plots
+
 │
+
 ├── 📁 report ← Final report (PDF)
+
 ├── 📁 presentation ← 10-minute presentation
+
 ├── 📁 diary ← Individual research diaries
+
 │
+
 ├── 📄 .gitignore
+
 ├── 📄 environment.yml ← Conda environment
+
 ├── 📄 README.md ← This file
+
 └── 📄 requirements.txt ← Python dependencies
+
 
 ## Getting Started
 
