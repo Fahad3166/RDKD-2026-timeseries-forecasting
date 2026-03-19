@@ -1,0 +1,49 @@
+# ============================================================
+# KDD Project - Conda Environment
+# Compatible with MacBook Air M4 (Apple Silicon arm64)
+# ============================================================
+
+name: kdd_ts
+channels:
+  - conda-forge      # Best channel for Apple Silicon support
+  - defaults
+
+dependencies:
+  # ── Python ──────────────────────────────────────────────
+  - python=3.11
+
+  # ── Core Data ───────────────────────────────────────────
+  - numpy>=1.26
+  - pandas>=2.1
+  - scipy>=1.11
+
+  # ── Visualization ────────────────────────────────────────
+  - matplotlib>=3.8
+  - seaborn>=0.13
+  - plotly>=5.18
+
+  # ── Machine Learning / Clustering ────────────────────────
+  - scikit-learn>=1.3
+  - hdbscan                        # Density-based clustering
+  - pip                            # For pip-only packages
+
+  # ── Forecasting ──────────────────────────────────────────
+  - lightgbm>=4.1                  # Fast gradient boosting
+  - statsmodels>=0.14              # SARIMAX, ETS, etc.
+
+  # ── Jupyter ──────────────────────────────────────────────
+  - jupyterlab>=4.0
+  - ipywidgets
+  - nbformat
+
+  # ── Utilities ────────────────────────────────────────────
+  - tqdm                           # Progress bars
+  - joblib                         # Parallel processing
+  - pyyaml
+
+  # ── pip-only packages ─────────────────────────────────────
+  - pip:
+    - tslearn==0.6.3               # Time series clustering (DTW)
+    - prophet==1.1.5               # Facebook Prophet forecasting
+    - pyod                         # Outlier detection
+    - kaleido                      # Plotly static image export
