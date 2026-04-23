@@ -1,4 +1,3 @@
- FINAL UPDATED README (READY TO PASTE)
 # RDKD 2026 Project: Large-Scale Time Series Forecasting with Clustering
 
 ##  Project Overview
