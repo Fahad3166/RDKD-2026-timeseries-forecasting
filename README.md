@@ -1,175 +1,247 @@
+ FINAL UPDATED README (READY TO PASTE)
 # RDKD 2026 Project: Large-Scale Time Series Forecasting with Clustering
 
-## 📋 Project Overview
+##  Project Overview
 
-This project explores clustering as a preprocessing step for large-scale time series forecasting. Using daily energy consumption data for 17,547 households over two years (2023-2024), we:
+This project investigates whether **clustering households improves time series forecasting performance** for large-scale energy consumption data.
 
-1. **Cluster households** based on their consumption patterns using 13 extracted features
-2. **Train forecasting models** at both global and cluster levels
-3. **Compare performance** to demonstrate the value of clustering
+We use daily electricity consumption for **17,547 households** across:
 
-The dataset contains daily energy consumption for 2023 (training) and 2024 (testing, leap year with 366 days).
-## 🗂️ Repository Structure
+- 2023 → Training data (365 days)**
+- **2024 → Evaluation data (366 days, leap year)**
+
+##  Objectives
+
+1. Cluster households based on consumption behavior  
+2. Build forecasting models:
+   - Global model (baseline)
+   - Cluster-based models (proposed)
+3. Compare performance using **household-level MAE**
+
+
+##  Important Constraint
+
+All models follow a strict **no data leakage setup**:
+
+- Training uses **only 2023 data**
+- Clustering uses **only 2023 features**
+- Forecasting uses **recursive prediction**
+- 2024 data is used **only for evaluation**
+
+
+## Repository Structure
+
 📦 RDKD-2026-timeseries-forecasting
-├── 📁 data
-
-│ ├── 📁 raw ← Place sample_23.csv & sample_24.csv here
-
-│ └── 📁 processed ← Cleaned data and extracted features
-
+├── data/
+│   ├── raw/                ← sample_23.csv, sample_24.csv
+│   └── processed/          ← engineered features
 │
-
-├── 📁 src ← Python modules
-
-│ ├── 📄 config.py ← Configuration and paths
-
-│ ├── 📄 data_loader.py ← Data loading functions
-
-│ ├── 📄 preprocessing.py ← Data cleaning and normalization
-
-│ ├── 📄 feature_engineering.py ← Feature extraction from time series
-
-│ └── 📄 utils.py ← Utility functions
-
+├── src/
+│   ├── config.py
+│   ├── feature_engineering_daily.py
+│   ├── forecasting.py
 │
-
-├── 📁 notebooks ← Jupyter notebooks for analysis
-
-│ ├── 📄 01_data_exploration.ipynb
-
-│ ├── 📄 02_feature_extraction.ipynb
-
-│ ├── 📄 03_clustering.ipynb
-
-│ └── 📄 04_forecasting.ipynb
-
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_feature_extraction.ipynb
+│   ├── 03_clustering.ipynb
+│   └── 04_forecasting.ipynb   ← FINAL MODEL
 │
-
-├── 📁 outputs
-
-│ ├── 📁 clustering ← Cluster assignments and models
-
-
-│ ├── 📁 forecasting ← Trained forecasting models
-
-│ ├── 📁 evaluation ← Performance metrics
-
-│ └── 📁 figures ← Generated plots
-
+├── outputs/ (ignored in Git)
 │
-
-├── 📁 report ← Final report (PDF)
-
-├── 📁 presentation ← 10-minute presentation
-
-├── 📁 diary ← Individual research diaries
-
+├── report/
+├── presentation/
+├── diary/
 │
+├── README.md
+├── requirements.txt
+└── environment.yml
 
-├── 📄 .gitignore
+##  Methodology
 
-├── 📄 environment.yml ← Conda environment
+### 1. Feature Engineering (Clustering)
 
-├── 📄 README.md ← This file
+From each household's 2023 time series, we extract statistical features:
 
-└── 📄 requirements.txt ← Python dependencies
+- Level: mean
+- Variability: coefficient of variation
+- Shape: skewness, kurtosis
+- Seasonality: summer/winter peaks
+- Weekly behavior: weekend ratio
+- Peaks: number and intensity
+- Zeros: inactivity patterns
+
+Reduced to **13 key features** for clustering.
+
+### 2. Clustering (Task 1)
+
+- Algorithm: **K-Means**
+- Optimal clusters selected using:
+  - Elbow method
+  - Silhouette score
+
+Result: **5 clusters of households**
+
+Clusters represent distinct consumption behaviors.
+
+### 3. Forecasting (Task 2)
+
+We compare two approaches:
+
+###  Global Model (Baseline)
+- One model trained on all households
+
+###  Cluster-Based Model (Proposed)
+- One model per cluster
+- Small clusters use global fallback
+
+---
+
+##  Feature Engineering for Forecasting
+
+Each time series is transformed into supervised learning features:
+
+### Lag Features
+- lag_1, lag_2, lag_3, lag_5, lag_7, lag_10, lag_14, lag_21, lag_28, lag_30
+
+### Rolling Statistics
+- mean (7, 14, 30 days)
+- std (7, 14, 30 days)
+
+### Rolling Min/Max
+- captures peaks and drops
+
+### Exponential Weighted Average
+- emphasizes recent values
+
+### Calendar Features
+- day of week, month, week, quarter, weekend
+
+### Cyclical Encoding
+- sine/cosine of time features
+
+### Household-Level Features (2023 only)
+- yearly mean, std, min, max
+- weekday/weekend behavior
+- variability metrics
+
+ Total: **41 features**
 
 
-## Getting Started
+##  Forecasting Strategy
 
-### Prerequisites
-- Python 3.11+
-- Conda (recommended) or pip
-- Git
-- 
-### Installation
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/[YOUR_USERNAME]/RDKD-2026-timeseries-forecasting.git
-   cd RDKD-2026-timeseries-forecasting
-   
-## Download the dataset:
-Download sample_23.csv and sample_24.csv from this link # https://ucloud.univie.ac.at/index.php/s/o5295C8mQo6Jg6m
-Place both files in data/raw/
-## Set up the environment:
-Using Conda (recommended)
-bash
+We use **recursive forecasting**:
+
+- Predict day 1 of 2024
+- Feed prediction into history
+- Predict day 2
+- Continue for all 366 days
+
+ No actual 2024 values are used during prediction.
+
+##  Model Selection
+
+Tested models:
+- LightGBM
+- XGBoost
+- CatBoost
+- Ridge
+- HistGradientBoosting
+
+ Final model:
+
+**HistGradientBoostingRegressor**
+
+Reason:
+- Best MAE performance
+- Efficient on large tabular data
+
+##  Performance Optimization
+
+- Implemented **batched forecasting**
+- Predictions computed per cluster in parallel
+- Reduced runtime from hours → minutes
+
+##  Final Results
+
+###  Main Metric: MAE (Mean Absolute Error)
+
+| Model                     | MAE   |
+|--------------------------|--------|
+| Global HistGB            | 3.8947 |
+| Cluster HistGB (Final)   | 3.7443 |
+
+ **Improvement: +3.86%**
+ 
+##  Per-Cluster MAE
+
+| Cluster | Households | MAE   |
+|--------|------------|--------|
+| 0      | 5,733      | 6.4462 |
+| 1      | 11,561     | 2.4580 |
+| 2      | 84         | 1.9913 |
+| 3      | 1          | 2.3147 |
+| 4      | 168        | 0.9469 |
+
+
+ Insight:
+- Cluster 0 = hardest to predict
+- Other clusters more stable
+
+## Key Insights
+
+- Clustering improves forecasting accuracy
+- Feature engineering is critical
+- Household-level statistics significantly boost performance
+- Recursive forecasting is realistic but challenging
+- Not all clusters are equally predictable
+
+  
+##  Experiments That Did NOT Help
+
+- Longer seasonal lags (35, 42, 56 days)
+- These increased MAE → removed from final model
+
+##  Evaluation Method
+
+- MAE computed per household
+- Final score = average MAE across households
+
+ Matches assignment requirement
+
+##  How to Run
+
+### Setup
+
+
 conda env create -f environment.yml
 conda activate kdd_ts
-## pip install -r requirements.txt
-Verify setup:
-bash
-python src/test_setup.py
 
-## Features Extracted
-I extracted 26 features per household, reduced to 13 key features for clustering:
-Category	               Features	                                         Description
-Level	                    mean	                                          Average daily consumption
-Variability	               cv	                                            Coefficient of variation (std/mean)
-Shape	                  skewness,                                         kurtosis	Distribution shape
-Weekly                 	weekend_ratio	                                    Weekend vs weekday consumption
-Seasonal	              summer_peak, winter_peak	                        Seasonal patterns
-Trend	                  trend_slope	                                      Year-long trend
-Peaks                  	n_peaks,peak_height_ratio	                        Peak behavior
-Zeros	                  zero_percentage, avg_zero_run	                    Absence patterns
 
-## PCA analysis shows 10 components capture 95% of variance, confirming feature quality.
+### Run notebooks
 
-## Methodology
-Phase 1: Data Exploration & Preprocessing
+jupyter notebook notebooks/04_forecasting.ipynb
 
-Load and inspect 17,547 households × 365 days
-Handle problematic series (zeros, constant values)
-Normalize time series for fair comparison
+## 📦 Dataset
 
-Phase 2: Feature Extraction
-Extract 26 statistical, temporal, peak, and zero features
-Handle missing values via median imputation
-Select 13 non-redundant features for clustering
+Download:
+[https://ucloud.univie.ac.at/index.php/s/o5295C8mQo6Jg6m](https://ucloud.univie.ac.at/index.php/s/o5295C8mQo6Jg6m)
 
-Phase 3: Clustering (Task 1)
-Determine optimal k using elbow method and silhouette score
-Apply K-means clustering
-Profile and interpret clusters
+Place in: data/raw/
 
-Phase 4: Forecasting (Task 2)
-Global model: Single model trained on all households
-Cluster models: Separate models per cluster
-Evaluate using MAE on 2024 data
-Compare performance improvements
+##  Final Conclusion
 
-## Key Findings (To Be Updated)
-Finding	                          Value
-Total households	                17,547
-Problematic series	              610 (3.5%)
-Features extracted              	26
-Optimal PCA components	          10 (95% variance)
-Selected features	                13
+Cluster-based forecasting using HistGradientBoosting improves performance over a global model, achieving:
 
-## Results from clustering and forecasting will be added here.
+ **Final MAE: 3.7443**
 
-## Usage
-## Run Data Exploration
-jupyter notebook notebooks/01_data_exploration.ipynb
+This demonstrates that grouping households by behavior enables more accurate time series prediction.
 
-## Extract Features
-jupyter notebook notebooks/02_feature_extraction.ipynb
+## Author
 
-## Perform Clustering
-jupyter notebook notebooks/03_clustering.ipynb
+Fahad Ali Abbasi
+University of Vienna – Masters in Computer Science
 
-## Dependencies
-text
-python=3.11
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-scipy
-statsmodels
-jupyter
-joblib
-Full dependencies in environment.yml and requirements.txt.
+
 
 
