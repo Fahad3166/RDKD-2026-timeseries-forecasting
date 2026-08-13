@@ -1,4 +1,5 @@
 # RDKD 2026 Project: Large-Scale Time Series Forecasting with Clustering
+## Industry collaboration project with VERBUND AG (Austria's largest energy company) — Praktikum P1, University of Vienna, Masters in Computer Science
 
 ##  Project Overview
 
